@@ -4,9 +4,9 @@ import { createStore } from 'vuex'
 const store = createStore({
   state () {
     return {
-      loggedInUser: '',
+      loggedInUser: null,
       loggedIn: false,
-      loggedInToken: ''
+      loggedInToken: null
     }
   },
   mutations: {
@@ -14,6 +14,12 @@ const store = createStore({
         state.loggedInUser = payload.user
         state.loggedIn = payload.status
         state.loggedInToken = payload.token
+    },
+    clearLoggedInData(state) {
+      state.loggedInUser = null
+      state.loggedIn = false
+      state.loggedInToken = null
+      
     }
   },
   getters:{
