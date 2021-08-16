@@ -37,6 +37,7 @@ class LoginController extends Controller
             $response->code = Response::HTTP_NOT_FOUND;
             $response->isSuccess = false;
         }
+        $response->message = 'Logged In Successfully';
         return response()->json($response, Response::HTTP_OK);
     }
 

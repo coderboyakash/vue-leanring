@@ -1,6 +1,18 @@
 <template>
     <el-row :gutter="20">
         <el-col :span="12" :offset="6">
+            <el-alert v-for="error in errors" :key="error.index"
+                :title="error"
+                type="error"
+                center
+                show-icon>
+            </el-alert>
+            <el-alert v-if="message"
+                :title="message"
+                type="success"
+                center
+                show-icon>
+            </el-alert>
             <el-card>
                 <h3>Login Box</h3>
                 <form @submit.prevent="handleLogin">
@@ -25,17 +37,19 @@
     </el-row>
 </template>
 <script>
-    import { ElButton, ElRow, ElCol, ElInput, ElCard } from 'element-plus'
+    import { ElButton, ElRow, ElCol, ElInput, ElCard, ElAlert } from 'element-plus'
     import axios from 'axios'
     export default {
         components:{
-            ElButton, ElRow, ElCol, ElInput, ElCard
+            ElButton, ElRow, ElCol, ElInput, ElCard, ElAlert
         },
         data(){
             return {
                 email : '',
                 password : '',
-                loading : false
+                loading : false,
+                errors : [],
+                message : null
             }
         },
         methods:{
@@ -57,7 +71,16 @@
                             'status' : true
                         })
                         localStorage.setItem('_token', data.token);
-                        this.$router.push({name:'home'})
+                        setTimeout(() => {
+                            this.$router.push({name:'home'})
+                        }, 1000);
+                        this.message = data.message
+                    }else{
+                        this.loading = false
+                        this.errors = data.errors
+                        setTimeout(() => {
+                            this.errors = []
+                        }, 5000);
                     }
                 })
             }
