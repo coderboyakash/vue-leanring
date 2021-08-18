@@ -82,6 +82,12 @@
                             this.errors = []
                         }, 5000);
                     }
+                }).catch(()=>{
+                    this.errors = ['Something Went Wrong!']
+                    setTimeout(() => {
+                        this.loading = false
+                        this.errors = []
+                    }, 2000);
                 })
             }
         }
